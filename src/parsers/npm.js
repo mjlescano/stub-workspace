@@ -15,7 +15,7 @@ export class NpmParser extends BaseParser {
       if (path === '') continue
       if (path.startsWith('node_modules/')) continue
       if (!info?.name) continue
-      result.push({ path, name: info.name, version: info.version })
+      result.push({ path, ...BaseParser.extractFields(info) })
     }
     return result
   }

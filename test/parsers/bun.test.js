@@ -28,8 +28,35 @@ test('BunParser.parse handles missing version', () => {
     }
   }`
   const result = BunParser.parse(text)
+  assert.deepEqual(result, [{ path: 'packages/foo', name: 'foo' }])
+})
+
+test('BunParser.parse preserves dependency maps', () => {
+  const text = `{
+    "workspaces": {
+      "packages/api": {
+        "name": "@acme/api",
+        "version": "1.0.0",
+        "dependencies": { "lodash": "^4.17.21", "@acme/db": "workspace:*" },
+        "devDependencies": { "vitest": "^1.0.0" },
+        "peerDependencies": { "react": "^18.0.0" },
+        "optionalDependencies": { "fsevents": "^2.3.0" },
+        "peerDependenciesMeta": { "react": { "optional": true } },
+      },
+    },
+  }`
+  const result = BunParser.parse(text)
   assert.deepEqual(result, [
-    { path: 'packages/foo', name: 'foo', version: undefined },
+    {
+      path: 'packages/api',
+      name: '@acme/api',
+      version: '1.0.0',
+      dependencies: { lodash: '^4.17.21', '@acme/db': 'workspace:*' },
+      devDependencies: { vitest: '^1.0.0' },
+      peerDependencies: { react: '^18.0.0' },
+      optionalDependencies: { fsevents: '^2.3.0' },
+      peerDependenciesMeta: { react: { optional: true } },
+    },
   ])
 })
 

@@ -78,8 +78,7 @@ export function generateWorkspaceStubs(options = {}) {
   for (const ws of workspaces) {
     const dir = resolve(resolvedCwd, ws.path)
     const file = join(dir, 'package.json')
-    const stub = { name: ws.name }
-    if (ws.version) stub.version = ws.version
+    const { path: _path, ...stub } = ws
     if (!dryRun) {
       mkdirSync(dirname(file), { recursive: true })
       writeFileSync(file, JSON.stringify(stub, null, 2) + '\n')

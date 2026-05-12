@@ -28,3 +28,29 @@ test('NpmParser.parse skips root and node_modules entries', () => {
 test('NpmParser.parse returns empty when no packages', () => {
   assert.deepEqual(NpmParser.parse('{}'), [])
 })
+
+test('NpmParser.parse preserves dependency maps', () => {
+  const text = JSON.stringify({
+    name: 'root',
+    lockfileVersion: 3,
+    packages: {
+      '': { name: 'root', workspaces: ['packages/*'] },
+      'packages/api': {
+        name: '@acme/api',
+        version: '1.0.0',
+        dependencies: { lodash: '^4.17.21', '@acme/db': '*' },
+        devDependencies: { vitest: '^1.0.0' },
+      },
+    },
+  })
+  const result = NpmParser.parse(text)
+  assert.deepEqual(result, [
+    {
+      path: 'packages/api',
+      name: '@acme/api',
+      version: '1.0.0',
+      dependencies: { lodash: '^4.17.21', '@acme/db': '*' },
+      devDependencies: { vitest: '^1.0.0' },
+    },
+  ])
+})

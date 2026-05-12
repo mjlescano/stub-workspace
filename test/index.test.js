@@ -143,6 +143,38 @@ test('explicit lockfile path is honored', () => {
   })
 })
 
+test('stub includes dependency maps and keeps conventional ordering', () => {
+  withTempRepo((dir) => {
+    writeFileSync(
+      join(dir, 'bun.lock'),
+      `{
+        "workspaces": {
+          "packages/api": {
+            "name": "@acme/api",
+            "version": "1.0.0",
+            "dependencies": { "lodash": "^4.17.21", "@acme/db": "workspace:*" },
+            "devDependencies": { "vitest": "^1.0.0" },
+          },
+        },
+      }`,
+    )
+    generateWorkspaceStubs({ cwd: dir, silent: true })
+    const raw = readFileSync(join(dir, 'packages/api/package.json'), 'utf8')
+    assert.deepEqual(JSON.parse(raw), {
+      name: '@acme/api',
+      version: '1.0.0',
+      dependencies: { lodash: '^4.17.21', '@acme/db': 'workspace:*' },
+      devDependencies: { vitest: '^1.0.0' },
+    })
+    assert.deepEqual(Object.keys(JSON.parse(raw)), [
+      'name',
+      'version',
+      'dependencies',
+      'devDependencies',
+    ])
+  })
+})
+
 test('stub omits version when missing from lockfile', () => {
   withTempRepo((dir) => {
     writeFileSync(

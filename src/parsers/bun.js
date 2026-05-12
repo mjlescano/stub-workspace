@@ -17,7 +17,7 @@ export class BunParser extends BaseParser {
     for (const [path, info] of Object.entries(workspaces)) {
       if (path === '') continue
       if (!info?.name) continue
-      result.push({ path, name: info.name, version: info.version })
+      result.push({ path, ...BaseParser.extractFields(info) })
     }
     return result
   }
