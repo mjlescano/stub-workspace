@@ -16,12 +16,17 @@
   "bin": {
     "stub-workspace": "bin/stub-workspace.js"
   },
+  "types": "./types/index.d.ts",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.js"
+    }
   },
   "files": [
     "bin",
-    "src"
+    "src",
+    "types"
   ],
   "engines": {
     "node": ">=18"
@@ -29,10 +34,13 @@
   "scripts": {
     "test": "node --test 'test/**/*.test.js'",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "build:types": "tsc",
+    "prepack": "npm run build:types"
   },
   "devDependencies": {
-    "prettier": "^3.3.0"
+    "prettier": "^3.3.0",
+    "typescript": "^6.0.3"
   },
   "license": "MIT"
 }
