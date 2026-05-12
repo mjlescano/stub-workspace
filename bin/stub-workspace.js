@@ -2,7 +2,7 @@
 import { parseArgs } from 'node:util'
 import { generateWorkspaceStubs } from '../src/index.js'
 
-const HELP = `generate-workspace-stubs [options]
+const HELP = `stub-workspace [options]
 
 Options:
   --cwd <path>       Working directory (default: process.cwd())

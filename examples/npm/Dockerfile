@@ -1,10 +1,10 @@
-# Demonstrates Docker layer caching with `generate-workspace-stubs` for an
+# Demonstrates Docker layer caching with `stub-workspace` for an
 # npm workspaces monorepo.
 #
 # Build context: this directory.
 # Usage: docker build -t example-npm .
 #
-# `npx -y generate-workspace-stubs` fetches the published CLI. If the
+# `npx -y stub-workspace` fetches the published CLI. If the
 # package isn't published yet, copy the tool's `bin/` + `src/` into the
 # image instead and run it via `node`.
 
@@ -15,7 +15,7 @@ WORKDIR /app
 # changes. The stubs are derived from the lockfile, so the install layer
 # is cached even when workspace source code changes.
 COPY package.json package-lock.json ./
-RUN npx -y generate-workspace-stubs
+RUN npx -y stub-workspace
 RUN npm ci
 
 FROM node:22-alpine AS app

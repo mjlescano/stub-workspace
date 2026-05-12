@@ -1,10 +1,10 @@
 {
-  "name": "generate-workspace-stubs",
+  "name": "stub-workspace",
   "version": "0.1.0",
   "description": "Generate minimal package.json stubs for monorepo workspaces — for Docker layer caching",
   "type": "module",
   "bin": {
-    "generate-workspace-stubs": "bin/generate-workspace-stubs.js"
+    "stub-workspace": "bin/stub-workspace.js"
   },
   "exports": {
     ".": "./src/index.js"
