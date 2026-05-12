@@ -1,0 +1,13 @@
+{
+  "name": "@example/api",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "@example/db": "*",
+    "@example/utils": "*"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.0"
+  }
+}

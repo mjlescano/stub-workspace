@@ -1,0 +1,10 @@
+{
+  "name": "@example/db",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "@example/utils": "*",
+    "nanoid": "^5.0.0"
+  }
+}

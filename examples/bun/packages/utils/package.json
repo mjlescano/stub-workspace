@@ -1,0 +1,9 @@
+{
+  "name": "@example/utils",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "is-plain-object": "^5.0.0"
+  }
+}
