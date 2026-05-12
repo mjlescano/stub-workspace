@@ -1,0 +1,28 @@
+{
+  "name": "generate-workspace-stubs",
+  "version": "0.1.0",
+  "description": "Generate minimal package.json stubs for monorepo workspaces — for Docker layer caching",
+  "type": "module",
+  "bin": {
+    "generate-workspace-stubs": "bin/generate-workspace-stubs.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test 'test/**/*.test.js'",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.3.0"
+  },
+  "license": "MIT"
+}
