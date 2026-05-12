@@ -1,20 +1,18 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
-import { parseBunLock, parseNpmLock } from './parsers.js'
+import { parsers } from './parsers/index.js'
 
-/** @typedef {import('./parsers.js').Workspace} Workspace */
+/** @typedef {import('./parsers/base.js').Workspace} Workspace */
 
-const PARSERS = {
-  'bun.lock': parseBunLock,
-  'package-lock.json': parseNpmLock,
-}
+const parserByFilename = new Map(parsers.map((P) => [P.filename, P]))
 
 /**
- * Lockfile basenames checked in order by {@link detectLockfile}.
+ * Lockfile basenames checked in order by {@link detectLockfile}, derived from
+ * the registered parsers.
  *
  * @type {readonly string[]}
  */
-export const DETECT_ORDER = ['bun.lock', 'package-lock.json']
+export const DETECT_ORDER = parsers.map((P) => P.filename)
 
 /**
  * Find the first supported lockfile in `cwd`.
@@ -52,12 +50,12 @@ export function readWorkspaces({ cwd = process.cwd(), lockfile } = {}) {
     }
     lockfilePath = resolve(resolvedCwd, detected)
   }
-  const parser = PARSERS[basename(lockfilePath)]
+  const parser = parserByFilename.get(basename(lockfilePath))
   if (!parser) {
     throw new Error(`Unsupported lockfile: ${basename(lockfilePath)}`)
   }
   const text = readFileSync(lockfilePath, 'utf8')
-  return parser(text)
+  return parser.parse(text)
 }
 
 /**

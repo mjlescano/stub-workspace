@@ -88,7 +88,7 @@ Options:
   --silent           Suppress output
 ```
 
-Auto-detection order: `bun.lock` → `package-lock.json`.
+Auto-detection order: `package-lock.json` → `bun.lock`.
 
 ### Implementation notes
 

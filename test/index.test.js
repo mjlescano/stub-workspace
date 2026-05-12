@@ -24,18 +24,18 @@ function withTempRepo(fn) {
   }
 }
 
-test('detectLockfile prefers bun.lock over package-lock.json', () => {
+test('detectLockfile prefers package-lock.json over bun.lock', () => {
   withTempRepo((dir) => {
     writeFileSync(join(dir, 'bun.lock'), '{ "workspaces": {} }')
     writeFileSync(join(dir, 'package-lock.json'), '{}')
-    assert.equal(detectLockfile(dir), 'bun.lock')
+    assert.equal(detectLockfile(dir), 'package-lock.json')
   })
 })
 
-test('detectLockfile falls back to package-lock.json', () => {
+test('detectLockfile falls back to bun.lock', () => {
   withTempRepo((dir) => {
-    writeFileSync(join(dir, 'package-lock.json'), '{}')
-    assert.equal(detectLockfile(dir), 'package-lock.json')
+    writeFileSync(join(dir, 'bun.lock'), '{ "workspaces": {} }')
+    assert.equal(detectLockfile(dir), 'bun.lock')
   })
 })
 
