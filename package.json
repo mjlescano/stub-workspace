@@ -2,6 +2,16 @@
   "name": "stub-workspace",
   "version": "0.1.0",
   "description": "Generate minimal package.json stubs for monorepo workspaces — for Docker layer caching",
+  "homepage": "https://github.com/mjlescano/stub-workspace#readme",
+  "bugs": "https://github.com/mjlescano/stub-workspace/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjlescano/stub-workspace.git"
+  },
+  "author": {
+    "name": "Matías Lescano",
+    "url": "https://github.com/mjlescano"
+  },
   "type": "module",
   "bin": {
     "stub-workspace": "bin/stub-workspace.js"
